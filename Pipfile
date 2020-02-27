@@ -10,6 +10,7 @@ black = "*"
 flake8 = "*"
 pillow = "*"
 django = "==2.2.5"
+django-countries = "*"
 
 [requires]
 python_version = "3.7"

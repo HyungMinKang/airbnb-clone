@@ -16,7 +16,7 @@ class User(AbstractUser):
         (GENDER_OTHER, "Other"),
     )
 
-    LANGUAGE_ENGLISH = "en"
+    LANGUAGE_ENGLISH = "en"  # 추가적인 언어 구현 숙제
     LANGUAGE_KOREAN = "kr"
 
     LANGUAGE_CHOICES = (
@@ -24,7 +24,7 @@ class User(AbstractUser):
         (LANGUAGE_KOREAN, "Korean"),
     )
 
-    CURRENCY_USD = "usd"
+    CURRENCY_USD = "usd"  # 추가적인 화페 구현 숙제
     CURRENCY_KRW = "krw"
 
     CURRNECY_CHOICES = (

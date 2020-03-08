@@ -1,7 +1,9 @@
 from django.db.models import ObjectDoesNotExist
 from django.utils import timezone
+from django.urls import reverse
+from django_countries import countries
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from . import models
 
 
@@ -22,11 +24,20 @@ class HomeView(ListView):
         return context
 
 
-def room_detail(request, pk):
+class RoomDetail(DetailView):
 
-    try:
-        room = models.Room.objects.get(pk=pk)
-    except models.Room.DoestNotExit:
-        pass
+    """RoomDetail Definition """
 
-    return render(request, "rooms/detail.html", {"room": room})
+    model = models.Room
+
+
+def search(request):
+
+    city = request.GET.get("city", "Anywhere")
+    city = str.capitalize(city)
+    room_types = models.RoomType.objects.all()
+    return render(
+        request,
+        "rooms/search.html",
+        {"city": city, "countries": countries, "room_types": room_types},
+    )

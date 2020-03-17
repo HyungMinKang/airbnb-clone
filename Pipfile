@@ -15,6 +15,7 @@ django-seed = "*"
 black = "*"
 django-dotenv = "*"
 requests = "*"
+dotenv = "*"
 
 [requires]
 python_version = "3.7"

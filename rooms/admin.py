@@ -69,11 +69,6 @@ class RoomAdmin(admin.ModelAdmin):
         "count_photos",
         "total_rating",
     )
-    ordering = (
-        "name",
-        "price",
-        "bedrooms",
-    )
 
     list_filter = (
         "instant_book",

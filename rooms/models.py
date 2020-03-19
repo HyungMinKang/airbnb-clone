@@ -1,8 +1,9 @@
+from django.utils import timezone
 from django.db import models  # django db import
 from django.urls import reverse
 from django_countries.fields import CountryField  # outside package import
 from core import models as core_models  # innerside application package import
-
+from cal import Calendar
 
 # Create your models here.
 
@@ -79,7 +80,10 @@ class Room(core_models.TimeStampedModel):
     baths = models.IntegerField(default="")
     check_in = models.TimeField()
     check_out = models.TimeField()
-    instant_book = models.BooleanField(default=False)
+    IsitAble = "IsisAble"
+    instant_book = models.CharField(
+        choices=[(IsitAble, "Availiable"), (IsitAble, "Disable")], max_length=20
+    )
     host = models.ForeignKey(
         "users.User", related_name="rooms", on_delete=models.CASCADE
     )
@@ -111,10 +115,25 @@ class Room(core_models.TimeStampedModel):
         return 0
 
     def first_photo(self):
-        (photo,) = self.photos.all()[:1]
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
 
     def get_next_four_photos(self):
         photos = self.photos.all()[1:5]
 
         return photos
+
+    def get_calendars(self):
+        now = timezone.now()
+        this_year = now.year
+        this_month = now.month
+        next_month = this_month + 1
+        if this_month == 12:
+            next_month = 1
+        this_month_cal = Calendar(this_year, this_month)
+        next_month_cal = Calendar(this_year, next_month)
+
+        return (this_month_cal, next_month_cal)

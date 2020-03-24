@@ -10,7 +10,6 @@ awsebcli = "*"
 [packages]
 flake8 = "*"
 pillow = "*"
-pathspec ="==0.5.9"
 django = "==2.2.5"
 django-countries = "*"
 django-seed = "*"
@@ -18,8 +17,7 @@ black = "*"
 django-dotenv = "*"
 requests = "*"
 dotenv = "*"
-pipenv-to-requirements = "*"
-psycopg = "*"
+pathspec = "==0.5.9"
 
 [requires]
 python_version = "3.7"

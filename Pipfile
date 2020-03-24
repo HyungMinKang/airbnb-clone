@@ -17,7 +17,7 @@ black = "*"
 django-dotenv = "*"
 requests = "*"
 dotenv = "*"
-pathspec = "==0.5.9"
+pathspec = "==0.7.0"
 
 [requires]
 python_version = "3.7"

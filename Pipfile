@@ -19,6 +19,7 @@ django-dotenv = "*"
 requests = "*"
 dotenv = "*"
 pipenv-to-requirements = "*"
+psycopg = "*"
 
 [requires]
 python_version = "3.7"

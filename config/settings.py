@@ -26,7 +26,7 @@ SECRET_KEY = "=roq332))@g*pgcgz6h@&7tx8d=ov^qi0x!+l&ap$%)dhbcigh"
 DEBUG = True
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".elasticbeanstalk.com"]
 
 
 # Application definition
@@ -89,7 +89,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-if DEBUG is Falseeb:
+if DEBUG is False:
 
     DATABASES = {
         "default": {

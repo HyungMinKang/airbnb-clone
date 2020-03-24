@@ -10,11 +10,29 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
-appdirs==1.4.3
-attrs==19.3.0
-black==19.10b0
-click==7.1.1
-pathspec==0.7.0
-regex==2020.2.20
-toml==0.10.0
-typed-ast==1.4.1
+awsebcli==3.17.1
+botocore==1.15.27
+cement==2.8.2
+certifi==2019.11.28
+chardet==3.0.4
+colorama==0.3.9
+docutils==0.15.2
+entrypoints==0.3
+flake8==3.7.9
+future==0.16.0
+idna==2.9
+jmespath==0.9.5
+mccabe==0.6.1
+pathspec==0.5.9
+pycodestyle==2.5.0
+pyflakes==2.1.1
+pypiwin32==223
+python-dateutil==2.8.1
+pywin32==227
+pyyaml==5.2
+requests==2.23.0
+semantic-version==2.5.0
+six==1.14.0
+termcolor==1.1.0
+urllib3==1.25.8 ; python_version != '3.4'
+wcwidth==0.1.9

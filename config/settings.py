@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET")
 DEBUG = True
 
 
-ALLOWED_HOSTS = [".elasticbeanstalk.com", "airbnb-clone.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -90,7 +90,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 
-if DEBUG is False:
+if DEBUG:
 
     DATABASES = {
         "default": {

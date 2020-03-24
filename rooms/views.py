@@ -1,14 +1,5 @@
 from django.http import Http404
-from django.db.models import ObjectDoesNotExist
-from django.utils import timezone
-from django_countries import countries
-from django.views.generic import (
-    ListView,
-    DetailView,
-    View,
-    UpdateView,
-    FormView,
-)
+from django.views.generic import ListView, DetailView, View, UpdateView, FormView
 from django.shortcuts import render, redirect, reverse
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -16,6 +7,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from users import mixins as user_mixins
 from . import models, forms
+from django_countries import countries
 
 
 class HomeView(ListView):
@@ -23,16 +15,10 @@ class HomeView(ListView):
     """ HomeView Definition """
 
     model = models.Room
-    paginate_by = 10
+    paginate_by = 12
     paginate_orphans = 5
     ordering = "created"
     context_object_name = "rooms"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        now = timezone.now()
-        context["now"] = now
-        return context
 
 
 class RoomDetail(DetailView):
@@ -43,13 +29,15 @@ class RoomDetail(DetailView):
 
 
 class SearchView(View):
-    """SearchView Definition"""
+
+    """ SearchView Definition """
 
     def get(self, request):
 
         country = request.GET.get("country")
 
         if country:
+
             form = forms.SearchForm(request.GET)
 
             if form.is_valid():
@@ -64,7 +52,7 @@ class SearchView(View):
                 baths = form.cleaned_data.get("baths")
                 instant_book = form.cleaned_data.get("instant_book")
                 superhost = form.cleaned_data.get("superhost")
-                amenties = form.cleaned_data.get("amenties")
+                amenities = form.cleaned_data.get("amenities")
                 facilities = form.cleaned_data.get("facilities")
 
                 filter_args = {}
@@ -98,8 +86,8 @@ class SearchView(View):
                 if superhost is True:
                     filter_args["host__superhost"] = True
 
-                for amenity in amenties:
-                    filter_args["amenties"] = amenity
+                for amenity in amenities:
+                    filter_args["amenities"] = amenity
 
                 for facility in facilities:
                     filter_args["facilities"] = facility
@@ -117,8 +105,8 @@ class SearchView(View):
                 )
 
         else:
-
             form = forms.SearchForm()
+
         return render(request, "rooms/search.html", {"form": form})
 
 
@@ -219,4 +207,3 @@ class CreateRoomView(user_mixins.LoggedInOnlyView, FormView):
         form.save_m2m()
         messages.success(self.request, "Room created")
         return redirect(reverse("rooms:detail", kwargs={"pk": room.pk}))
-

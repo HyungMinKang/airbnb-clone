@@ -13,6 +13,8 @@ class ItemAdmin(admin.ModelAdmin):
     def used_by(self, obj):
         return obj.rooms.count()
 
+    pass
+
 
 class PhotoInline(admin.TabularInline):
     model = models.Photo
@@ -33,8 +35,8 @@ class RoomAdmin(admin.ModelAdmin):
                     "name",
                     "description",
                     "country",
-                    "address",
                     "city",
+                    "address",
                     "price",
                     "room_type",
                 )
@@ -57,7 +59,6 @@ class RoomAdmin(admin.ModelAdmin):
         "country",
         "city",
         "price",
-        "address",
         "guests",
         "beds",
         "bedrooms",
@@ -73,11 +74,11 @@ class RoomAdmin(admin.ModelAdmin):
     list_filter = (
         "instant_book",
         "host__superhost",
-        "city",
         "room_type",
         "amenties",
         "facilities",
         "house_rules",
+        "city",
         "country",
     )
 
@@ -94,17 +95,15 @@ class RoomAdmin(admin.ModelAdmin):
         "house_rules",
     )
 
-    def save_model(self, request, obj, form, change):
-        print(obj, change, form)
-        super().save_model(request, obj, form, change)
-
     def count_amenties(self, obj):
         return obj.amenties.count()
+
+    count_amenties.short_description = "Amenity Count"
 
     def count_photos(self, obj):
         return obj.photos.count()
 
-    count_photos.short_description = " Photo Count"
+    count_photos.short_description = "Photo Count"
 
 
 @admin.register(models.Photo)

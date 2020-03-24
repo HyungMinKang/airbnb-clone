@@ -1,16 +1,14 @@
 from django.utils import timezone
-from django.db import models  # django db import
+from django.db import models
 from django.urls import reverse
-from django_countries.fields import CountryField  # outside package import
-from core import models as core_models  # innerside application package import
+from django_countries.fields import CountryField
+from core import models as core_models
 from cal import Calendar
-
-# Create your models here.
 
 
 class AbstractItem(core_models.TimeStampedModel):
 
-    """Abstract Item"""
+    """ Abstract Item """
 
     name = models.CharField(max_length=80)
 
@@ -23,7 +21,7 @@ class AbstractItem(core_models.TimeStampedModel):
 
 class RoomType(AbstractItem):
 
-    """ RoomType Object Definition"""
+    """ RoomType Model Definition """
 
     class Meta:
         verbose_name = "Room Type"
@@ -31,7 +29,7 @@ class RoomType(AbstractItem):
 
 class Amenity(AbstractItem):
 
-    """ Amenity Model Definition"""
+    """ Amenity Model Definition """
 
     class Meta:
         verbose_name_plural = "Amenties"
@@ -39,7 +37,9 @@ class Amenity(AbstractItem):
 
 class Facility(AbstractItem):
 
-    """ Facility Model Definition"""
+    """ Facility Model Definition """
+
+    pass
 
     class Meta:
         verbose_name_plural = "Facilities"
@@ -47,14 +47,15 @@ class Facility(AbstractItem):
 
 class HouseRule(AbstractItem):
 
-    """ HouseRule Model Definition"""
+    """ HouseRule Model Definition """
 
     class Meta:
         verbose_name = "House Rule"
 
 
 class Photo(core_models.TimeStampedModel):
-    """ Photo Model Definition"""
+
+    """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
     file = models.ImageField(upload_to="room_photos")
@@ -66,24 +67,21 @@ class Photo(core_models.TimeStampedModel):
 
 class Room(core_models.TimeStampedModel):
 
-    """Room Model Definition"""
+    """ Room Model Definition """
 
     name = models.CharField(max_length=140)
     description = models.TextField()
     country = CountryField()
     city = models.CharField(max_length=80)
     price = models.IntegerField()
-    address = models.CharField(max_length=140, default="")
+    address = models.CharField(max_length=140)
     guests = models.IntegerField(help_text="How many people will be staying?")
     beds = models.IntegerField()
     bedrooms = models.IntegerField()
-    baths = models.IntegerField(default="")
+    baths = models.IntegerField()
     check_in = models.TimeField()
     check_out = models.TimeField()
-    IsitAble = "IsisAble"
-    instant_book = models.CharField(
-        choices=[(IsitAble, "Availiable"), (IsitAble, "Disable")], max_length=20
-    )
+    instant_book = models.BooleanField(default=False)
     host = models.ForeignKey(
         "users.User", related_name="rooms", on_delete=models.CASCADE
     )
@@ -111,7 +109,6 @@ class Room(core_models.TimeStampedModel):
             for review in all_reviews:
                 all_ratings += review.rating_average()
             return round(all_ratings / len(all_reviews), 2)
-
         return 0
 
     def first_photo(self):
@@ -123,7 +120,6 @@ class Room(core_models.TimeStampedModel):
 
     def get_next_four_photos(self):
         photos = self.photos.all()[1:5]
-
         return photos
 
     def get_calendars(self):
@@ -135,5 +131,4 @@ class Room(core_models.TimeStampedModel):
             next_month = 1
         this_month_cal = Calendar(this_year, this_month)
         next_month_cal = Calendar(this_year, next_month)
-
-        return (this_month_cal, next_month_cal)
+        return [this_month_cal, next_month_cal]

@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 "status": lambda x: random.choice(["pending", "confirmed", "canceled"]),
                 "guest": lambda x: random.choice(users),
                 "room": lambda x: random.choice(rooms),
-                "check_in": lambda x: datetime.now(),
+                "check_in": lambda x: datetime.now() + timedelta(days=1),
                 "check_out": lambda x: datetime.now()
                 + timedelta(days=random.randint(3, 25)),
             },

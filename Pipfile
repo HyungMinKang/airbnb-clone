@@ -17,7 +17,7 @@ sentry-sdk = "==0.13.2"
 django-storages = "*"
 boto3 = "*"
 psycopg2 = "*"
-django-countires = "*"
+django-countries = "*"
 
 [requires]
 python_version = "3.7"

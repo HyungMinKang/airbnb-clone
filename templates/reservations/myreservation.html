@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{user_obj}}'s Reservation
+{% endblock page_title %}
+
+{% block content %}
+    <div class="h-75wh">
+        <h3 class="mb-12 text-2xl text-center">Your Reservation</h3>
+        <form method="get" action="{% url "reservations:view" %}">
+        <div class="container mx-auto pb-10r">
+            {% for reservation in reservations %}
+                {{reservation}}
+            {% endfor %}
+            
+        </div>
+        
+
+    </div>
+{% endblock content %}

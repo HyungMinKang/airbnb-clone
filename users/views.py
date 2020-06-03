@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from . import forms, models, mixins
+from rooms import models as room_models
 
 
 class LoginView(mixins.LoggedOutOnlyView, FormView):

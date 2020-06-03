@@ -1,10 +1,13 @@
 import datetime
 from django.http import Http404
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from rooms import models as room_models
 from reviews import forms as review_forms
+from users import mixins as user_mixins
+from users import models as user_models
+from rooms import models as room_models
 from . import models
 
 # Create your views here.
@@ -66,3 +69,23 @@ def edit_reservation(request, pk, verb):
     reservation.save()
     messages.success(request, "Reservation Updated")
     return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
+
+
+class SeeMyReservationView(user_mixins.LoggedInOnlyView, DetailView):
+    def get(self, request):
+        user = user_models.User
+        all_rooms = room_models.Room.objects.all()
+        has_rev_room = {}
+        reservations = {}
+        for room in all_rooms:
+            if room.host == user:
+                has_rev_room.append(room)
+
+        for room in has_rev_room:
+            reservations.append(room.reservation)
+
+        return render(
+            request, "reservations/myreservation.html", {"reservations": reservations}
+        )
+
+    template_name = "reservations/myreservation.html"
